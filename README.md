@@ -10,6 +10,6 @@
 
 * A website that I like because of its aesthetics is [Aceship](https://puppiizsunniiz.github.io/AN-EN-Tags/akhrchars.html).
 
-* Memes that captures how I currently feel about my university studies is and
+* Memes that captures how I currently feel about my university studies is <img src="https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif" width="40" height="40" /> and
 
-![](https://tenor.com/en-GB/view/nadeshiko-yuru-camp-laid-back-camp-gif-16553688308034388768)
+![](https://tenor.com/en-GB/view/nadeshiko-yuru-camp-laid-back-camp-gif-16553688308034388768.gif)
