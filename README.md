@@ -2,9 +2,9 @@
 
 ## This is my repo for STATS 220. 
 
-** A little about me: **
+***A little about me:***
 
-1. I am undertaking a degree in Information Technology and Management (ITM)
+1. I am undertaking a degree in **Information Technology and Management** (ITM)
 2. I am taking STATS 220 because I found the overall course outline for 220 to be interesting and was a highly recommendable paper based from my friends who have previously taken STATS 220 before. 
 3. I am interested in learning about R language as a I deepen my basic outlook and knowledge about R and slightly revise my knowledge of HTML.
 
