@@ -1,0 +1,169 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+h1 {
+  color: #be6000;
+  font-family: Georgia;
+}
+h2 {
+  color: #9c91ff;
+  font-family: Georgia;
+}
+
+h3 {
+  color: #7c4ba3;
+  font-family: Georgia;
+}
+p {
+  color: #6a6e4d;
+  font-size: 20px;
+  line-height: 1.5;
+  font-family: Georgia;
+}
+
+body {
+  background-color: #EEEEEE
+}
+
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  font-family: Georgia;
+}
+
+th {
+  background-color: #6a6e4d;
+  color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+td {
+  padding: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+caption {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+```
+
+# What's going on with this data?
+
+# Instagram Reels Analysis and Viewer Behavior Trends
+
+## This dynamic report explores my Instagram reel-watching behaviour. It highlights viewing trends based on genre and the time of day that I have seen my reels, providing insights into my user preferences.
+
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+
+# Load the CSV data into a data frame
+csv_file <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvz1IslYYgWxg1L7GxmT0zM-PWKdosPGqrrou2ok9s0zvuNKxvEv7e-px9Os0KO7gvfPU-39niKz80/pub?output=csv"
+logged_data <- read_csv(csv_file)
+#logged_data
+
+# Renaming variables for clarity through creating a new data frame called latest_data
+latest_data <- logged_data %>%
+  rename(
+    Reel_Count = `How many Instagram reels did you watch during this session?`, 
+    Genre = `What genre best describes the reel/s you observed?`,
+    Time_of_Day = `What time of the day did you observe the reel/s?`,
+    Reasons = `What made the reel/s stand out to you?`,
+  )
+
+# Calculate summary values which is the mean of of Reel_Count
+mean_reel_counts_value <- mean(latest_data$Reel_Count, na.rm = TRUE)
+rounded_mean <- round(mean_reel_counts_value, 2) # Round mean to 2 decimal places
+
+genre_counts <- latest_data %>%
+  count(Genre) %>% # Count the occurrences of each genre
+  arrange(desc(n)) # Arrange in descending order of frequency
+
+# View the genre with the highest count
+most_popular_genre <- genre_counts %>%
+  slice(1)
+
+# Extracting genre name and count from the most_popular_genre data frame
+genre_name <- most_popular_genre$Genre
+genre_count <- most_popular_genre$n
+
+
+# Create a bar chart to visualize a categorical variable which is time_frame
+bar_chart_time_frame <- latest_data %>%
+  count(Time_of_Day) %>% 
+  ggplot(aes(x = Time_of_Day, y = n, fill = Time_of_Day)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Bar Chart of Time_of_Day", 
+    x = "Category", 
+    y = "Count"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+print(bar_chart_time_frame)
+
+# Create a bar chart with genre_counts data
+bar_chart_genre_counts <- latest_data %>%
+  count(Genre) %>%
+  ggplot(aes(x = Genre, y = n, fill = Genre)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(
+    title = "Frequency of Reel Genres",
+    x = "Genre",
+    y = "Count"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Rotate x-axis labels for better visibility
+
+print(bar_chart_genre_counts)
+
+# Summarized data for the table
+summary_data <- latest_data %>%
+  count(Time_of_Day, Genre) %>% # Summarize counts for each Time_of_Day and Genre
+  rename(Count = n)
+
+# Create the table
+knitr::kable(
+  summary_data, 
+  format = "html", 
+  table.attr = 'class="table-style"',
+  col.names = c("Time of Day", "Genre", "Reel Count"),
+  caption = "Summary of Reel Watching Data by Time of Day and Genre"
+)
+
+pets <- c("cat", "dog", "turtle", "rabbit")
+best_pet <- pets[1]
+
+```
+
+## Summary Insights
+
+### - The average number of reels watched during a session is `r rounded_mean`.
+### - The most popular reel genre is `r genre_name` with a total count of `r genre_count`.
+### - Additional Insight: This data suggests genre preferences may influence user engagement.
+
+# The best pet to have is a `r best_pet` of course!
+
+![](https://c.tenor.com/-qBsG1HwR4oAAAAC/tenor.gif)
