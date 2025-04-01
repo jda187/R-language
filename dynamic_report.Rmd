@@ -34,12 +34,6 @@ body {
 
 hr {
   border: none;
-  border-top: 5px solid #6a6e4d; /* Line color and thickness */
-  margin: 20px 0;
-}
-
-hr {
-  border: none;
   border-top: .7px solid #6a6e4d; /* Line color and thickness */
   margin: 20px 0;
 }
@@ -101,7 +95,7 @@ most_active_time_of_day <- most_active_time$Time_of_Day
 most_active_time_reel_count <- most_active_time$total_count
 ```
 
-***
+---
 
 # Summary Insights
 
