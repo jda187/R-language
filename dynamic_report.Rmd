@@ -11,69 +11,54 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
 ```{css}
 h1 {
   color: #be6000;
-  font-family: Georgia;
+  font-family: Helvetica;
+  font-size: 45px;
 }
 h2 {
-  color: #9c91ff;
-  font-family: Georgia;
+  color: #996000;
+  font-family: Helvetica;
+  font-size: 35px
 }
 
 h3 {
   color: #7c4ba3;
-  font-family: Georgia;
+  font-family: Helvetica;
+  font-size: 25px;
 }
 p {
   color: #6a6e4d;
   font-size: 20px;
   line-height: 1.5;
-  font-family: Georgia;
+  font-family: Helvetica;
 }
 
 body {
-  background-color: #EEEEEE
+  background-color: #EEEEEE;
+  padding: 30px 0;
 }
 
-table {
-  width: 90%;
-  margin: 20px auto;
-  border-collapse: collapse;
-  font-family: Georgia;
+hr {
+  border: none;
+  border-top: 5px solid #6a6e4d; /* Line color and thickness */
+  margin: 20px 0;
 }
 
-th {
-  background-color: #6a6e4d;
-  color: white;
-  padding: 10px;
-  border: 1px solid #ccc;
+.hd {
+  border: none;
+  border-top: .7px solid #6a6e4d; /* Line color and thickness */
+  margin: 20px 0;
 }
 
-td {
-  padding: 8px;
-  border: 1px solid #ccc;
-  text-align: center;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-tr:hover {
-  background-color: #ddd;
-}
-
-caption {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
 ```
 
-# What's going on with this data?
+# Overview
+## Instagram Reels Analysis and Viewer Behavior Trends
 
-# Instagram Reels Analysis and Viewer Behavior Trends
+<hr>
 
-## This dynamic report explores my Instagram reel-watching behaviour. It highlights viewing trends based on genre and the time of day that I have seen my reels, providing insights into my user preferences.
+This report explores data collected on Instagram reels, analyzing factors such as reel count, genres, time of day, and reasons for engagement. By examining these aspects, it provides insights into user behavior and preferences.
 
+All data in this report was gathered via Google Forms through observational logging.
 
 ```{r}
 # Load necessary libraries
@@ -109,61 +94,96 @@ most_popular_genre <- genre_counts %>%
 genre_name <- most_popular_genre$Genre
 genre_count <- most_popular_genre$n
 
+# Find the Time_of_Day with the highest total_count
+most_active_time <- latest_data %>%
+  group_by(Time_of_Day) %>%
+  summarise(total_count = sum(Reel_Count, na.rm = TRUE)) %>%
+  arrange(desc(total_count)) %>%
+  slice(1)
 
+# Extract the Time_of_Day and its count
+most_active_time_of_day <- most_active_time$Time_of_Day
+most_active_time_reel_count <- most_active_time$total_count
+```
+
+<div class="hd"></div>
+
+# Summary Insights
+
+<hr>
+
+### Average Number of Reels Watched Per Session
+
+<div class="hd"></div>
+
+The average number of reels watched per session is **`r rounded_mean`**, indicating how many reels users engage with during typical sessions.
+
+### Most Popular Genre
+
+<div class="hd"></div>
+
+The most frequently observed genre is **`r genre_name`**, appearing **`r genre_count`** times in the dataset. This highlights user preferences for this genre.
+
+### Most Common Time for Reel Watching
+
+<div class="hd"></div>
+
+The time of day with the highest reel engagement is **`r most_active_time_of_day`** with a total of **`r most_active_time_reel_count`**, indicating which time of day I scroll through my Instagram account the most.
+
+# Bar Charts
+
+<hr>
+
+## Total Instagram Reel Engagement by Time of Day
+
+<div class="hd"></div>
+
+```{r}
 # Create a bar chart to visualize a categorical variable which is time_frame
-bar_chart_time_frame <- latest_data %>%
-  count(Time_of_Day) %>% 
-  ggplot(aes(x = Time_of_Day, y = n, fill = Time_of_Day)) +
+reel_count_bar_chart <- latest_data %>%
+  group_by(Time_of_Day) %>%
+  summarise(total_count = sum(Reel_Count, na.rm = TRUE)) %>%
+  ggplot(aes(x = Time_of_Day, y = total_count, fill = Time_of_Day)) +
   geom_bar(stat = "identity") +
   labs(
-    title = "Bar Chart of Time_of_Day", 
-    x = "Category", 
-    y = "Count"
+    title = "Total Instagram Reel Engagement by Time of Day",
+    x = "Time of Day",
+    y = "Total Reel Count",
+    fill = "Time of Day"
   ) +
+  theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-print(bar_chart_time_frame)
-
-# Create a bar chart with genre_counts data
-bar_chart_genre_counts <- latest_data %>%
-  count(Genre) %>%
-  ggplot(aes(x = Genre, y = n, fill = Genre)) +
-  geom_bar(stat = "identity") +
-  theme_minimal() +
-  labs(
-    title = "Frequency of Reel Genres",
-    x = "Genre",
-    y = "Count"
-  ) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Rotate x-axis labels for better visibility
-
-print(bar_chart_genre_counts)
-
-# Summarized data for the table
-summary_data <- latest_data %>%
-  count(Time_of_Day, Genre) %>% # Summarize counts for each Time_of_Day and Genre
-  rename(Count = n)
-
-# Create the table
-knitr::kable(
-  summary_data, 
-  format = "html", 
-  table.attr = 'class="table-style"',
-  col.names = c("Time of Day", "Genre", "Reel Count"),
-  caption = "Summary of Reel Watching Data by Time of Day and Genre"
-)
-
-pets <- c("cat", "dog", "turtle", "rabbit")
-best_pet <- pets[1]
+print(reel_count_bar_chart)
 
 ```
 
-## Summary Insights
+This bar chart depicts the correlation between the time of day when reels were viewed (x-axis) and the overall count of reels (y-axis). Each bar indicates the total number of reels viewed during a designated time frame, with distinct colors used to differentiate these periods for better understanding. The visualization highlights peak engagement times, revealing when users are most active with Instagram reels, which provides essential insights for determining the best times to post in order to enhance audience reach and interaction. The design is clean and minimalistic, promoting ease of reading and effective analysis.
 
-### - The average number of reels watched during a session is `r rounded_mean`.
-### - The most popular reel genre is `r genre_name` with a total count of `r genre_count`.
-### - Additional Insight: This data suggests genre preferences may influence user engagement.
+## Distribution of Instagram Reel Genres Across Time Periods
 
-# The best pet to have is a `r best_pet` of course!
+<div class="hd"></div>
 
-![](https://c.tenor.com/-qBsG1HwR4oAAAAC/tenor.gif)
+```{r}
+# Create a stacked bar chart with Time_of_Day and Genre
+stacked_bar_chart <- latest_data %>%
+  count(Time_of_Day, Genre) %>% # Summarize counts
+  ggplot(aes(x = Time_of_Day, y = n, fill = Genre)) + 
+  geom_bar(stat = "identity") + # Create stacked bars
+  labs(
+    title = "Distribution of Instagram Reel Genres Across Time Periods",
+    subtitle = "Analysing the amount of reels observed with different genres at a given time",
+    x = "Time of Day",
+    y = "Reel Count",
+    fill = "Genre",
+    caption = "Source: Google Forms",
+  ) +
+  theme_minimal() + # Clean theme
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Rotate x-axis labels
+
+# Print the stacked bar chart
+print(stacked_bar_chart)
+
+```
+
+This stacked bar chart illustrates the distribution of Instagram reel genres at various times throughout the day. The x-axis indicates distinct time intervals (such as morning, afternoon, and evening), while the y-axis shows the number of reels recorded for each genre. Each bar is divided by genre, offering a detailed overview of genre preferences during these times. This visualization enables us to discern which genres capture user interest during peak viewing hours and emphasizes the variety of content engagement across different periods. Such insights could prove beneficial for customizing content strategies to align with specific audience preferences.
