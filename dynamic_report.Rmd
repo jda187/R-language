@@ -15,16 +15,11 @@ h1 {
   font-size: 45px;
 }
 h2 {
-  color: #996000;
+  color: #006000;
   font-family: Helvetica;
   font-size: 35px
 }
 
-h3 {
-  color: #7c4ba3;
-  font-family: Helvetica;
-  font-size: 25px;
-}
 p {
   color: #6a6e4d;
   font-size: 20px;
@@ -43,7 +38,7 @@ hr {
   margin: 20px 0;
 }
 
-.hd {
+hr {
   border: none;
   border-top: .7px solid #6a6e4d; /* Line color and thickness */
   margin: 20px 0;
@@ -54,7 +49,7 @@ hr {
 # Overview
 ## Instagram Reels Analysis and Viewer Behavior Trends
 
-<hr>
+---
 
 This report explores data collected on Instagram reels, analyzing factors such as reel count, genres, time of day, and reasons for engagement. By examining these aspects, it provides insights into user behavior and preferences.
 
@@ -106,37 +101,31 @@ most_active_time_of_day <- most_active_time$Time_of_Day
 most_active_time_reel_count <- most_active_time$total_count
 ```
 
-<div class="hd"></div>
+***
 
 # Summary Insights
 
-<hr>
+---
 
-### Average Number of Reels Watched Per Session
-
-<div class="hd"></div>
+## Average Number of Reels Watched Per Session
 
 The average number of reels watched per session is **`r rounded_mean`**, indicating how many reels users engage with during typical sessions.
 
-### Most Popular Genre
-
-<div class="hd"></div>
+## Most Popular Genre
 
 The most frequently observed genre is **`r genre_name`**, appearing **`r genre_count`** times in the dataset. This highlights user preferences for this genre.
 
-### Most Common Time for Reel Watching
-
-<div class="hd"></div>
+## Most Common Time for Reel Watching
 
 The time of day with the highest reel engagement is **`r most_active_time_of_day`** with a total of **`r most_active_time_reel_count`**, indicating which time of day I scroll through my Instagram account the most.
 
 # Bar Charts
 
-<hr>
+---
 
 ## Total Instagram Reel Engagement by Time of Day
 
-<div class="hd"></div>
+---
 
 ```{r}
 # Create a bar chart to visualize a categorical variable which is time_frame
@@ -162,7 +151,7 @@ This bar chart depicts the correlation between the time of day when reels were v
 
 ## Distribution of Instagram Reel Genres Across Time Periods
 
-<div class="hd"></div>
+---
 
 ```{r}
 # Create a stacked bar chart with Time_of_Day and Genre
