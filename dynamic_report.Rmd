@@ -141,7 +141,7 @@ print(reel_count_bar_chart)
 
 ```
 
-This bar chart depicts the correlation between the time of day when reels were viewed (x-axis) and the overall count of reels (y-axis). Each bar indicates the total number of reels viewed during a designated time frame, with distinct colors used to differentiate these periods for better understanding. The visualization highlights peak engagement times, revealing when users are most active with Instagram reels, which provides essential insights for determining the best times to post in order to enhance audience reach and interaction. The design is clean and minimalistic, promoting ease of reading and effective analysis.
+This bar chart depicts the correlation between the time of day when reels were viewed (x-axis) and the overall count of reels (y-axis). Each bar indicates the total number of reels viewed during a designated time frame, with distinct colors used to differentiate these periods for better understanding. The visualisation highlights peak engagement times, revealing when users are most active with Instagram reels, which provides essential insights for determining the best times to post in order to enhance audience reach and interaction. The design is clean and minimalistic, promoting ease of reading and effective analysis.
 
 ## Distribution of Instagram Reel Genres Across Time Periods
 
@@ -169,4 +169,4 @@ print(stacked_bar_chart)
 
 ```
 
-This stacked bar chart illustrates the distribution of Instagram reel genres at various times throughout the day. The x-axis indicates distinct time intervals (such as morning, afternoon, and evening), while the y-axis shows the number of reels recorded for each genre. Each bar is divided by genre, offering a detailed overview of genre preferences during these times. This visualization enables us to discern which genres capture user interest during peak viewing hours and emphasizes the variety of content engagement across different periods. Such insights could prove beneficial for customizing content strategies to align with specific audience preferences.
+This stacked bar chart illustrates the distribution of Instagram reel genres at various times throughout the day. The x-axis indicates distinct time intervals (such as morning, afternoon, and evening), while the y-axis shows the number of reels recorded for each genre. Each bar is divided by genre, offering a detailed overview of genre preferences during these times. This visualisation enables us to discern which genres capture user interest during peak viewing hours and emphasies the variety of content engagement across different periods. Such insights could prove beneficial for customising content strategies to align with specific audience preferences.
